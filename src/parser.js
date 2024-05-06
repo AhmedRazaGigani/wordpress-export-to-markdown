@@ -173,25 +173,33 @@ function mergeImagesIntoPosts(images, posts) {
 }
 
 function populateFrontmatter(posts) {
-	posts.forEach(post => {
-		const frontmatter = {};
-		settings.frontmatter_fields.forEach(field => {
-			[key, alias] = field.split(':');
+    posts.forEach(post => {
+        const frontmatter = {};
+        settings.frontmatter_fields.forEach(field => {
+            let [key, alias] = field.split(':');
 
-			// Rename 'coverimage' to 'feature'
-            if (key === 'coverimage') {
+            // Rename 'coverImage' to 'feature'
+            // if (key === 'coverImage') {
+            //     key = 'feature';
+            // }
+			// if (alias === 'coverimage') {
+            //     alias = 'feature';
+            // }
+
+            let frontmatterGetter = frontmatterGetters[key];
+            if (!frontmatterGetter) {
+                throw `Could not find a frontmatter getter named "${key}".`;
+            }
+			// Rename 'coverImage' to 'feature'
+            if (key === 'coverImage') {
                 key = 'feature';
             }
 
-			let frontmatterGetter = frontmatterGetters[key];
-			if (!frontmatterGetter) {
-				throw `Could not find a frontmatter getter named "${key}".`;
-			}
-
-			frontmatter[alias || key] = frontmatterGetter(post);
-		});
-		post.frontmatter = frontmatter;
-	});
+            frontmatter[alias || key] = frontmatterGetter(post);
+        });
+        post.frontmatter = frontmatter;
+    });
 }
+
 
 exports.parseFilePromise = parseFilePromise;
