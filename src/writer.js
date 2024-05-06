@@ -147,7 +147,8 @@ async function loadImageFilePromise(imageUrl) {
 			headers: {
 				'User-Agent': 'wordpress-export-to-markdown'
 			},
-			strictSSL: settings.strict_ssl
+			// strictSSL: settings.strict_ssl
+			rejectUnauthorized: false // Add this option to bypass SSL certificate verification
 		});
 	} catch (ex) {
 		if (ex.name === 'StatusCodeError') {
