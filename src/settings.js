@@ -37,4 +37,4 @@ exports.filter_categories = ['uncategorized'];
 
 // Strict SSL is enabled as the safe default when downloading images, but will not work with
 // self-signed servers. You can disable it if you're getting a "self-signed certificate" error.
-exports.strict_ssl = true;
+exports.strict_ssl = false;
