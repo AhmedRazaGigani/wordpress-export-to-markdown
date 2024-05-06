@@ -178,6 +178,11 @@ function populateFrontmatter(posts) {
 		settings.frontmatter_fields.forEach(field => {
 			[key, alias] = field.split(':');
 
+			// Rename 'coverimage' to 'feature'
+            if (key === 'coverimage') {
+                key = 'feature';
+            }
+
 			let frontmatterGetter = frontmatterGetters[key];
 			if (!frontmatterGetter) {
 				throw `Could not find a frontmatter getter named "${key}".`;
