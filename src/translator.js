@@ -117,6 +117,19 @@ function getPostContent(postData, turndownService, config) {
 	// <pre> block, save it to a data attribute so the "pre" rule can use it
 	content = content.replace(/(<!-- wp:.+? \{"language":"(.+?)"\} -->\r?\n<pre )/g, '$1data-wetm-language="$2" ');
 
+	// Identify Vimeo iframes and replace with Hugo shortcode syntax
+    content = content.replace(/<iframe src="https:\/\/player.vimeo.com\/video\/(\d+)[^<]*<\/iframe>/g, (match, videoId) => {
+        return `{{< vimeo ${videoId} >}}`;
+    });
+
+	// Remove the Vimeo player.js script line
+	content = content.replace(/<script src="https:\/\/player.vimeo.com\/api\/player.js"><\/script>/g, '');
+
+	// Replace YouTube iframes with Hugo YouTube shortcode
+	content = content.replace(/<iframe src="https:\/\/www.youtube.com\/embed\/([^\?"]+)[^<]*<\/iframe>/g, (match, videoId) => {
+		return `{{< youtube ${videoId} >}}`;
+	});
+	
 	// use turndown to convert HTML to Markdown
 	content = turndownService.turndown(content);
 
