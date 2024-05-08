@@ -135,6 +135,11 @@ function getPostContent(postData, turndownService, config) {
 		return `{{< pinterest ${pinId} >}}`;
 	});
 
+	// Replace Pinterest iframe codes with Hugo Pinterest shortcode
+	content = content.replace(/<iframe src="https:\/\/assets\.pinterest\.com\/ext\/embed\.html\?id=(\d+)[^"]*"><\/iframe>/g, (match, pinId) => {
+		return `{{< pinterest ${pinId} >}}`;
+	});
+
 	// use turndown to convert HTML to Markdown
 	content = turndownService.turndown(content);
 
