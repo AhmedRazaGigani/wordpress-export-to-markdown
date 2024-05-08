@@ -130,6 +130,11 @@ function getPostContent(postData, turndownService, config) {
 		return `{{< youtube ${videoId} >}}`;
 	});
 	
+	// Replace Pinterest pin URLs with Hugo Pinterest shortcode
+	content = content.replace(/https:\/\/www\.pinterest\.com\.au\/pin\/(\d+)\//g, (match, pinId) => {
+		return `{{< pinterest ${pinId} >}}`;
+	});
+
 	// use turndown to convert HTML to Markdown
 	content = turndownService.turndown(content);
 
