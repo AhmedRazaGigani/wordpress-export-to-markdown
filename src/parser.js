@@ -172,6 +172,7 @@ function mergeImagesIntoPosts(images, posts) {
 	});
 }
 
+// Update Faq Start
 function populateFrontmatter(posts) {
     posts.forEach(post => {
         const frontmatter = {};
@@ -182,16 +183,35 @@ function populateFrontmatter(posts) {
             if (!frontmatterGetter) {
                 throw `Could not find a frontmatter getter named "${key}".`;
             }
-			// Rename 'coverImage' to 'feature'
-            if (key === 'coverImage') {
-                key = 'feature';
-            }
 
-            frontmatter[alias || key] = frontmatterGetter(post);
+            let value = frontmatterGetter(post);
+            
+            if (key === 'faqs') {
+                // Properly format the faqs field
+                frontmatter[alias || key] = formatFaqs(value);
+            } else {
+                frontmatter[alias || key] = value;
+            }
         });
         post.frontmatter = frontmatter;
     });
 }
 
+function formatFaqs(faqsString) {
+    const faqsArray = faqsString.split('\n').map(line => line.trim());
+    // let formattedFaqs = 'faqs:\n';
+    let formattedFaqs = '\n';
+    faqsArray.forEach(line => {
+        if (line.startsWith('- question:')) {
+            formattedFaqs += `  ${line}\n`;
+        } else if (line.startsWith('answer:')) {
+            formattedFaqs += `    ${line}\n`;
+        } else {
+            formattedFaqs += `${line}\n`;
+        }
+    });
+    return formattedFaqs;
+}
+// END
 
 exports.parseFilePromise = parseFilePromise;
