@@ -15,6 +15,14 @@ exports.frontmatter_fields = [
 	'venues'
 ];
 
+// Additional frontmatter fields for specific post types
+exports.additional_frontmatter_by_post_type = {
+    'tribe_events': {
+        attendanceMode: "Offline",
+        status: "Scheduled"
+    }
+};
+
 // Time in ms to wait between requesting image files. Increase this if you see timeouts or
 // server errors.
 exports.image_file_request_delay = 500;
