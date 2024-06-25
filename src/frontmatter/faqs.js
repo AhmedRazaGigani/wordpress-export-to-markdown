@@ -22,6 +22,10 @@ module.exports = (post) => {
         });
     }
 
+    if (faqs.length === 0) {
+        return null; // Return null if no FAQs found
+    }
+
     // Convert faqs array to a string representation
     const faqsString = faqs.map(faq => `- question: ${faq.question}\n\t\tanswer: ${faq.answer}`).join('\n');
 
