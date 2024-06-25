@@ -11,6 +11,8 @@ exports.frontmatter_fields = [
 	'faqs',
 	'eventStartDate',
 	'eventEndDate',
+	'organizers',
+	'venues'
 ];
 
 // Time in ms to wait between requesting image files. Increase this if you see timeouts or

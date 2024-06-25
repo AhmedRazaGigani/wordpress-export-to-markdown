@@ -184,22 +184,35 @@ function populateFrontmatter(posts) {
                 throw `Could not find a frontmatter getter named "${key}".`;
             }
 
-            let value = frontmatterGetter(post);
-            
+            let value;
+            if (key === 'organizers' || key === 'venues') {  // Include venues
+                value = frontmatterGetter(post, posts); // Pass all posts for organizers and venues
+            } else {
+                value = frontmatterGetter(post);
+            }
+
             if (key === 'faqs') {
                 // Properly format the faqs field
-                frontmatter[alias || key] = formatFaqs(value);
-            } else {
+                value = value ? formatFaqs(value) : null;
+            }
+
+            if (value !== null) {
                 frontmatter[alias || key] = value;
             }
         });
+
+        // Add additional frontmatter fields for specific post types
+        const additionalFields = settings.additional_frontmatter_by_post_type[post.meta.type];
+        if (additionalFields) {
+            Object.assign(frontmatter, additionalFields);
+        }
+
         post.frontmatter = frontmatter;
     });
 }
 
 function formatFaqs(faqsString) {
     const faqsArray = faqsString.split('\n').map(line => line.trim());
-    // let formattedFaqs = 'faqs:\n';
     let formattedFaqs = '\n';
     faqsArray.forEach(line => {
         if (line.startsWith('- question:')) {
