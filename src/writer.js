@@ -73,31 +73,39 @@ async function writeMarkdownFilesPromise(posts, config) {
 }
 
 async function loadMarkdownFilePromise(post) {
-	let output = '---\n';
+    let output = '---\n';
 
-	Object.entries(post.frontmatter).forEach(([key, value]) => {
-		let outputValue;
-		if (Array.isArray(value)) {
-			if (value.length > 0) {
-				// array of one or more strings
-				outputValue = value.reduce((list, item) => `${list}\n  - "${item}"`, '');
-			}
-		} else {
-			// single string value
-			const escapedValue = (value || '').replace(/"/g, '\\"');
-			if (escapedValue.length > 0) {
-				outputValue = `"${escapedValue}"`;
-			}
-		}
+    Object.entries(post.frontmatter).forEach(([key, value]) => {
+        let outputValue;
+        if (Array.isArray(value)) {
+            if (value.length > 0) {
+                if (typeof value[0] === 'object') {
+                    // array of objects
+                    outputValue = value.map(item => {
+                        return `\n  - ${Object.entries(item).map(([k, v]) => `${k}: "${v}"`).join('\n    ')}`;
+                    }).join('');
+                } else {
+                    // array of one or more strings
+                    outputValue = value.reduce((list, item) => `${list}\n  - "${item}"`, '');
+                }
+            }
+        } else {
+            // single string value
+            const escapedValue = (value || '').replace(/"/g, '\\"');
+            if (escapedValue.length > 0) {
+                outputValue = `"${escapedValue}"`;
+            }
+        }
 
-		if (outputValue !== undefined) {
-			output += `${key}: ${outputValue}\n`;
-		}
-	});
+        if (outputValue !== undefined) {
+            output += `${key}: ${outputValue}\n`;
+        }
+    });
 
-	output += `---\n\n${post.content}\n`;
-	return output;
+    output += `---\n\n${post.content}\n`;
+    return output;
 }
+
 
 async function writeImageFilesPromise(posts, config) {
 	// collect image data from all posts into a single flattened array of payloads
