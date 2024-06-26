@@ -199,7 +199,13 @@ function populateFrontmatter(posts) {
         // Add additional frontmatter fields for specific post types
         const additionalFields = settings.additional_frontmatter_by_post_type[post.meta.type];
         if (additionalFields) {
-            Object.assign(frontmatter, additionalFields);
+            Object.entries(additionalFields).forEach(([field, getterKey]) => {
+                if (getterKey === 'serieses') {
+                    frontmatter[field] = frontmatterGetters.serieses(post);
+                } else {
+                    frontmatter[field] = getterKey;
+                }
+            });
         }
 
         post.frontmatter = frontmatter;

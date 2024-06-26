@@ -19,7 +19,8 @@ exports.frontmatter_fields = [
 exports.additional_frontmatter_by_post_type = {
     'tribe_events': {
         attendanceMode: "Offline",
-        status: "Scheduled"
+        status: "Scheduled",
+        serieses: 'serieses'
     }
 };
 
