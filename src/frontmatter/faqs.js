@@ -26,8 +26,5 @@ module.exports = (post) => {
         return null; // Return null if no FAQs found
     }
 
-    // Convert faqs array to a string representation
-    const faqsString = faqs.map(faq => `- question: ${faq.question}\n\t\tanswer: ${faq.answer}`).join('\n');
-
-    return faqsString;
+    return faqs;
 };

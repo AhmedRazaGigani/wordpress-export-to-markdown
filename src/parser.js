@@ -191,11 +191,6 @@ function populateFrontmatter(posts) {
                 value = frontmatterGetter(post);
             }
 
-            if (key === 'faqs') {
-                // Properly format the faqs field
-                value = value ? formatFaqs(value) : null;
-            }
-
             if (value !== null) {
                 frontmatter[alias || key] = value;
             }
@@ -211,20 +206,6 @@ function populateFrontmatter(posts) {
     });
 }
 
-function formatFaqs(faqsString) {
-    const faqsArray = faqsString.split('\n').map(line => line.trim());
-    let formattedFaqs = '\n';
-    faqsArray.forEach(line => {
-        if (line.startsWith('- question:')) {
-            formattedFaqs += `  ${line}\n`;
-        } else if (line.startsWith('answer:')) {
-            formattedFaqs += `    ${line}\n`;
-        } else {
-            formattedFaqs += `${line}\n`;
-        }
-    });
-    return formattedFaqs;
-}
 // END
 
 exports.parseFilePromise = parseFilePromise;
