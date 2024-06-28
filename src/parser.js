@@ -200,10 +200,9 @@ function populateFrontmatter(posts) {
         const additionalFields = settings.additional_frontmatter_by_post_type[post.meta.type];
         if (additionalFields) {
             Object.entries(additionalFields).forEach(([field, getterKey]) => {
-                if (getterKey === 'serieses') {
-                    frontmatter[field] = frontmatterGetters.serieses(post);
-                } else {
-                    frontmatter[field] = getterKey;
+                const frontmatterGetter = frontmatterGetters[getterKey];
+                if (frontmatterGetter) {
+                    frontmatter[field] = frontmatterGetter(post);
                 }
             });
         }

@@ -89,9 +89,12 @@ async function loadMarkdownFilePromise(post) {
                     outputValue = value.reduce((list, item) => `${list}\n  - "${item}"`, '');
                 }
             }
+        } else if (value && typeof value === 'object') {
+            // single object value
+            outputValue = `\n  ${Object.entries(value).map(([k, v]) => `${k}: "${v}"`).join('\n  ')}`;
         } else {
             // single string value
-            const escapedValue = (value || '').replace(/"/g, '\\"');
+            const escapedValue = (value || '').toString().replace(/"/g, '\\"');
             if (escapedValue.length > 0) {
                 outputValue = `"${escapedValue}"`;
             }
@@ -105,7 +108,6 @@ async function loadMarkdownFilePromise(post) {
     output += `---\n\n${post.content}\n`;
     return output;
 }
-
 
 async function writeImageFilesPromise(posts, config) {
 	// collect image data from all posts into a single flattened array of payloads

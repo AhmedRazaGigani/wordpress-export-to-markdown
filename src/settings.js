@@ -3,16 +3,16 @@
 // field by providing an alias after a ':'. For example, 'date:created' will include 'date' in
 // frontmatter, but renamed to 'created'.
 exports.frontmatter_fields = [
-	'title',
-	'date',
-	'categories',
-	'tags',
-	'coverImage:feature',
-	'faqs',
-	'eventStartDate',
-	'eventEndDate',
-	'organizers',
-	'venues'
+    'title',
+    'date',
+    'categories',
+    'tags',
+    'coverImage:feature',
+    'faqs',
+    'eventStartDate',
+    'eventEndDate',
+    'organizers',
+    'venues'
 ];
 
 // Additional frontmatter fields for specific post types
@@ -21,6 +21,11 @@ exports.additional_frontmatter_by_post_type = {
         attendanceMode: "Offline",
         status: "Scheduled",
         serieses: 'serieses'
+    },
+    'tribe_organizer': {
+        'organizer-phones': 'organizerPhones',
+        'organizer-emails': 'organizerEmails',
+        'organizer-websites': 'organizerWebsites'
     }
 };
 
