@@ -26,6 +26,17 @@ exports.additional_frontmatter_by_post_type = {
         'organizer-phones': 'organizerPhones',
         'organizer-emails': 'organizerEmails',
         'organizer-websites': 'organizerWebsites'
+    },
+    'tribe_venue': {
+        'venue-countries': 'venueCountries',
+        'venue-countries-code': 'venueCountriesCode',
+        'venue-states': 'venueStates',
+        'venue-states-code': 'venueStatesCode',
+        'venue-cities': 'venueCities',
+        'venue-streets': 'venueStreets',
+        'venue-postalCodes': 'venuePostalCodes',
+        'venue-phones': 'venuePhones',
+        'venue-websites': 'venueWebsites'
     }
 };
 
