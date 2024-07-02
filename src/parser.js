@@ -192,7 +192,19 @@ function populateFrontmatter(posts) {
             }
 
             if (value !== null) {
-                frontmatter[alias || key] = value;
+                if (post.meta.type === 'tribe_events') {
+                    if (key === 'tags') {
+                        // Rename 'tags' to 'event-tags' for 'tribe_events' post type
+                        frontmatter['event-tags'] = value;
+                    } else if (key === 'categories') {
+                        // Rename 'categories' to 'event-categories' for 'tribe_events' post type
+                        frontmatter['event-categories'] = value;
+                    } else {
+                        frontmatter[alias || key] = value;
+                    }
+                } else {
+                    frontmatter[alias || key] = value;
+                }
             }
         });
 
