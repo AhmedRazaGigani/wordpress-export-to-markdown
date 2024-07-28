@@ -20,7 +20,12 @@ exports.additional_frontmatter_by_post_type = {
     'tribe_events': {
         attendanceMode: "Offline",
         status: "Scheduled",
-        serieses: 'serieses'
+        serieses: 'serieses',
+        countries: 'eventCountries',
+        'countries-code': 'eventCountriesCode',
+        states: 'eventStates',
+        'states-code': 'eventStatesCode',
+        cities: 'eventCities'
     },
     'tribe_organizer': {
         'organizer-phones': 'organizerPhones',
@@ -55,14 +60,11 @@ exports.include_time_with_date = false;
 // Override post date formatting with a custom formatting string (for example: 'yyyy LLL dd').
 // Tokens are documented here: https://moment.github.io/luxon/#/parsing?id=table-of-tokens. If
 // set, this takes precedence over include_time_with_date.
-// exports.custom_date_formatting = "yyyy-MM-dd'T'HH:mm";
 exports.custom_date_formatting = "yyyy-MM-dd'T'HH:mm:ssZZ";
 
 // Specify the timezone used for post dates. See available zone values and examples here:
 // https://moment.github.io/luxon/#/zones?id=specifying-a-zone.
-// exports.custom_date_timezone = 'utc';
-// exports.custom_date_timezone = 'America/Chicago'; // Example timezone
-exports.custom_date_timezone = 'Etc/GMT+5'; // Fixed offset timezone for -05:00
+exports.custom_date_timezone = 'Etc/GMT+5';
 
 // Categories to be excluded from post frontmatter. This does not filter out posts themselves,
 // just the categories listed in their frontmatter.

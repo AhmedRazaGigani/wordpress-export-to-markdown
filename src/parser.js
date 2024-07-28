@@ -185,8 +185,8 @@ function populateFrontmatter(posts) {
             }
 
             let value;
-            if (key === 'organizers' || key === 'venues') {  // Include venues
-                value = frontmatterGetter(post, posts); // Pass all posts for organizers and venues
+            if (['organizers', 'venues'].includes(key)) {
+                value = frontmatterGetter(post, posts);
             } else {
                 value = frontmatterGetter(post);
             }
@@ -194,10 +194,8 @@ function populateFrontmatter(posts) {
             if (value !== null) {
                 if (post.meta.type === 'tribe_events') {
                     if (key === 'tags') {
-                        // Rename 'tags' to 'event-tags' for 'tribe_events' post type
                         frontmatter['event-tags'] = value;
                     } else if (key === 'categories') {
-                        // Rename 'categories' to 'event-categories' for 'tribe_events' post type
                         frontmatter['event-categories'] = value;
                     } else {
                         frontmatter[alias || key] = value;
@@ -214,7 +212,7 @@ function populateFrontmatter(posts) {
             Object.entries(additionalFields).forEach(([field, getterKey]) => {
                 const frontmatterGetter = frontmatterGetters[getterKey];
                 if (frontmatterGetter) {
-                    frontmatter[field] = frontmatterGetter(post);
+                    frontmatter[field] = frontmatterGetter(post, posts);
                 }
             });
         }
